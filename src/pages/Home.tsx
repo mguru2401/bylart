@@ -1,6 +1,13 @@
-import { Link } from 'react-router-dom';
-import { Flower2, Heart, Users, BookOpen, ArrowRight } from 'lucide-react';
-import SEO from '../components/SEO';
+import { Link } from "react-router-dom";
+import {
+  Flower2,
+  Heart,
+  Users,
+  BookOpen,
+  ArrowRight,
+  Flower,
+} from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function Home() {
   return (
@@ -11,10 +18,10 @@ export default function Home() {
         keywords="bach flower therapy, emotional wellness, natural healing, flower remedies, holistic health"
       />
 
-      <div className="relative h-screen bg-gradient-to-br from-emerald-600 via-teal-500 to-emerald-700 overflow-hidden">
+      <div className="relative min-h-screen pt-24 md:pt-28 bg-gradient-to-br from-emerald-600 via-teal-500 to-emerald-700 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 animate-float">
-            <Flower2 size={80} className="text-white" />
+            <Flower size={80} className="text-white" />
           </div>
           <div className="absolute top-40 right-20 animate-float-delayed">
             <Flower2 size={60} className="text-white" />
@@ -23,7 +30,7 @@ export default function Home() {
             <Flower2 size={100} className="text-white" />
           </div>
           <div className="absolute bottom-40 right-1/3 animate-float-delayed">
-            <Flower2 size={70} className="text-white" />
+            <Flower size={70} className="text-white" />
           </div>
         </div>
 
@@ -33,13 +40,16 @@ export default function Home() {
               <div className="text-white space-y-6 animate-fade-in-up">
                 <h1
                   className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
-                  style={{ fontFamily: 'Georgia, serif' }}
+                  style={{ fontFamily: "Georgia, serif" }}
                 >
                   Nurture Your
-                  <span className="block text-emerald-200">Emotional Balance</span>
+                  <span className="block text-emerald-200">
+                    Emotional Balance
+                  </span>
                 </h1>
                 <p className="text-xl md:text-2xl text-emerald-50 leading-relaxed">
-                  Discover the transformative power of Bach Flower Therapy for holistic wellness and inner harmony
+                  Discover the transformative power of Bach Flower Therapy for
+                  holistic wellness and inner harmony
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <Link
@@ -72,21 +82,37 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-3 bg-white rounded-full animate-scroll"></div>
-          </div>
-        </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"></div>
       </div>
 
-      <section className="py-20 bg-white">
+      <section className="relative py-20 bg-white overflow-hidden">
+        {/* Floating Flower Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 opacity-20 animate-float">
+            <Flower size={100} className="text-emerald-400" />
+          </div>
+          <div className="absolute top-40 right-20 opacity-15 animate-float-delayed">
+            <Flower2 size={80} className="text-teal-400" />
+          </div>
+          <div className="absolute bottom-20 left-1/4 opacity-20 animate-float">
+            <Flower2 size={120} className="text-emerald-300" />
+          </div>
+          <div className="absolute bottom-40 right-1/3 opacity-15 animate-float-delayed">
+            <Flower size={90} className="text-teal-300" />
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
               Why Choose Bach Flower Therapy?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              A natural, gentle approach to emotional well-being that has helped millions worldwide
+              A natural, gentle approach to emotional well-being that has helped
+              millions worldwide
             </p>
           </div>
 
@@ -95,9 +121,12 @@ export default function Home() {
               <div className="bg-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Heart className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Emotional Balance</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Emotional Balance
+              </h3>
               <p className="text-gray-600 leading-relaxed">
-                Restore harmony to your emotional state through natural flower essences that address negative feelings and promote positivity.
+                Restore harmony to your emotional state through natural flower
+                essences that address negative feelings and promote positivity.
               </p>
             </div>
 
@@ -105,9 +134,12 @@ export default function Home() {
               <div className="bg-teal-600 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Users className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Expert Guidance</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Expert Guidance
+              </h3>
               <p className="text-gray-600 leading-relaxed">
-                Connect with certified Bach Flower practitioners who provide personalized treatment plans tailored to your unique needs.
+                Connect with certified Bach Flower practitioners who provide
+                personalized treatment plans tailored to your unique needs.
               </p>
             </div>
 
@@ -115,9 +147,12 @@ export default function Home() {
               <div className="bg-emerald-600 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <BookOpen className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Comprehensive Resources</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Comprehensive Resources
+              </h3>
               <p className="text-gray-600 leading-relaxed">
-                Access a wealth of educational materials, success stories, and expert advice to support your healing journey.
+                Access a wealth of educational materials, success stories, and
+                expert advice to support your healing journey.
               </p>
             </div>
           </div>
@@ -127,11 +162,15 @@ export default function Home() {
       <section className="py-20 bg-gradient-to-br from-emerald-900 via-teal-800 to-emerald-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2
+              className="text-4xl md:text-5xl font-bold mb-6"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
               Begin Your Journey to Wellness
             </h2>
             <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-              Take the first step toward emotional balance and holistic health with Bach Flower Therapy
+              Take the first step toward emotional balance and holistic health
+              with Bach Flower Therapy
             </p>
             <Link
               to="/remedies/introduction"
