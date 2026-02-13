@@ -45,7 +45,7 @@ function RouteChangeHandler({ children }: { children: React.ReactNode }) {
     <>
       {isChangingRoute && (
         <LoadingScreen
-          duration={1000}
+          duration={500}
           onComplete={() => setIsChangingRoute(false)}
         />
       )}
@@ -62,7 +62,7 @@ function App() {
       {/* Initial 2.5-second loading screen */}
       {showInitialLoading && (
         <LoadingScreen
-          duration={1500}
+          duration={800}
           onComplete={() => setShowInitialLoading(false)}
         />
       )}

@@ -7,7 +7,7 @@ interface LoadingScreenProps {
 }
 
 export default function LoadingScreen({
-  duration = 2000,
+  duration = 800,
   onComplete,
 }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
