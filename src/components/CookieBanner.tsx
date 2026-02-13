@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import { X, Cookie } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { X, Cookie } from "lucide-react";
 
 export default function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent');
+    const consent = localStorage.getItem("cookieConsent");
     if (!consent) {
       setTimeout(() => setIsVisible(true), 1000);
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('cookieConsent', 'accepted');
+    localStorage.setItem("cookieConsent", "accepted");
     setIsVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem('cookieConsent', 'declined');
+    localStorage.setItem("cookieConsent", "declined");
     setIsVisible(false);
   };
 
@@ -36,9 +36,11 @@ export default function CookieBanner() {
                 We Value Your Privacy
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                We use cookies to enhance your browsing experience, provide personalized content, and analyze our traffic.
-                By clicking "Accept All", you consent to our use of cookies. You can manage your preferences or learn more
-                about how we use cookies in our privacy policy.
+                We use cookies to enhance your browsing experience, provide
+                personalized content, and analyze our traffic. By clicking
+                "Accept All", you consent to our use of cookies. You can manage
+                your preferences or learn more about how we use cookies in our
+                privacy policy.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
@@ -52,9 +54,6 @@ export default function CookieBanner() {
                   className="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors duration-300"
                 >
                   Decline
-                </button>
-                <button className="px-6 py-2 text-emerald-600 font-medium hover:text-emerald-700 transition-colors duration-300">
-                  Manage Preferences
                 </button>
               </div>
             </div>
