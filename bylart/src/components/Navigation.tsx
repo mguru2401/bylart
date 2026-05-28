@@ -38,6 +38,7 @@ export default function Navigation() {
         { label: "Find Therapist", path: "/therapists/find" },
         { label: "About Therapists", path: "/therapists/about" },
         { label: "Book an appointment", path: "/therapists/book" },
+        { label: "Manage Directory", path: "/therapists/manage" },
       ],
     },
     { label: "Privacy & Policy", path: "/privacy-policy" },

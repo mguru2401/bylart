@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, Clock, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import SEO from '../../components/SEO';
+import { getTherapists, Therapist } from '../../utils/therapistStore';
 
 export default function BookAppointment() {
+  const [therapists, setTherapists] = useState<Therapist[]>([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,9 +15,23 @@ export default function BookAppointment() {
     message: '',
   });
 
+  useEffect(() => {
+    setTherapists(getTherapists());
+    
+    // Parse query parameter to prefill therapist
+    const params = new URLSearchParams(window.location.search);
+    const paramTherapist = params.get('therapist');
+    if (paramTherapist) {
+      setFormData(prev => ({
+        ...prev,
+        therapist: decodeURIComponent(paramTherapist)
+      }));
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Thank you for your booking request! A therapist will contact you shortly to confirm your appointment.');
+    alert(`Thank you for your booking request! A consultation request with ${formData.therapist || "your selected therapist"} has been submitted. They will contact you shortly to confirm your appointment.`);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -113,12 +129,9 @@ export default function BookAppointment() {
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   >
                     <option value="">Select a therapist</option>
-                    <option value="Dr. Sarah Mitchell">Dr. Sarah Mitchell</option>
-                    <option value="Emma Thompson">Emma Thompson</option>
-                    <option value="Dr. James Wilson">Dr. James Wilson</option>
-                    <option value="Rachel Phillips">Rachel Phillips</option>
-                    <option value="Michael Chen">Michael Chen</option>
-                    <option value="Dr. Lisa Anderson">Dr. Lisa Anderson</option>
+                    {therapists.map(t => (
+                      <option key={t.id} value={t.name}>{t.name} ({t.specialization})</option>
+                    ))}
                   </select>
                 </div>
 
@@ -182,7 +195,7 @@ export default function BookAppointment() {
                 <ul className="text-sm text-gray-700 space-y-1">
                   <li>• Initial consultations typically last 60 minutes</li>
                   <li>• Follow-up sessions are usually 30-45 minutes</li>
-                  <li>• You'll receive a confirmation email within 24 hours</li>
+                  <li>• You'll receive a confirmation call or email within 24 hours</li>
                   <li>• Please arrive 5 minutes early for your first appointment</li>
                 </ul>
               </div>
@@ -205,8 +218,8 @@ export default function BookAppointment() {
             </p>
             <p className="text-gray-600">
               Or contact us directly at{' '}
-              <a href="mailto:appointments@bylart.com" className="text-emerald-600 font-semibold hover:text-emerald-700">
-                appointments@bylart.com
+              <a href="mailto:getintouch@bylart.com" className="text-emerald-600 font-semibold hover:text-emerald-700">
+                getintouch@bylart.com
               </a>
             </p>
           </div>

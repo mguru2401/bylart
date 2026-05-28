@@ -1,164 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Search, Star, Phone, Mail } from "lucide-react";
+import { MapPin, Search, Star, Phone, Mail, Settings, UserPlus } from "lucide-react";
 import SEO from "../../components/SEO";
-
-const therapists = [
-  {
-    id: 1,
-    name: "Dr. Sarah Mitchell",
-    location: "London, UK",
-    specialization: "Anxiety & Stress Management",
-    experience: "15 years",
-    rating: 5,
-    phone: "+44 20 1234 5678",
-    email: "sarah.mitchell@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 2,
-    name: "Emma Thompson",
-    location: "Manchester, UK",
-    specialization: "Children & Family Therapy",
-    experience: "10 years",
-    rating: 5,
-    phone: "+44 161 234 5678",
-    email: "emma.thompson@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 3,
-    name: "Dr. James Wilson",
-    location: "Edinburgh, UK",
-    specialization: "Depression & Trauma",
-    experience: "20 years",
-    rating: 5,
-    phone: "+44 131 234 5678",
-    email: "james.wilson@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 4,
-    name: "Rachel Phillips",
-    location: "Birmingham, UK",
-    specialization: "Relationship Issues",
-    experience: "12 years",
-    rating: 5,
-    phone: "+44 121 234 5678",
-    email: "rachel.phillips@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 5,
-    name: "Michael Chen",
-    location: "Bristol, UK",
-    specialization: "Workplace Stress",
-    experience: "8 years",
-    rating: 5,
-    phone: "+44 117 234 5678",
-    email: "michael.chen@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 6,
-    name: "Dr. Lisa Anderson",
-    location: "Leeds, UK",
-    specialization: "Grief & Loss",
-    experience: "18 years",
-    rating: 5,
-    phone: "+44 113 234 5678",
-    email: "lisa.anderson@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5327584/pexels-photo-5327584.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 7,
-    name: "Jonathan Wright",
-    location: "Oxford, UK",
-    specialization: "Sleep & Insomnia",
-    experience: "14 years",
-    rating: 5,
-    phone: "+44 1865 234 567",
-    email: "jonathan.wright@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 8,
-    name: "Claire Bennett",
-    location: "Cambridge, UK",
-    specialization: "Confidence & Self-Esteem",
-    experience: "11 years",
-    rating: 5,
-    phone: "+44 1223 234 567",
-    email: "claire.bennett@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5215017/pexels-photo-5215017.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 9,
-    name: "David Foster",
-    location: "Liverpool, UK",
-    specialization: "Fear & Phobias",
-    experience: "22 years",
-    rating: 5,
-    phone: "+44 151 234 5678",
-    email: "david.foster@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5327660/pexels-photo-5327660.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 10,
-    name: "Sophie Martin",
-    location: "Newcastle, UK",
-    specialization: "Life Transitions",
-    experience: "9 years",
-    rating: 5,
-    phone: "+44 191 234 5678",
-    email: "sophie.martin@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5215021/pexels-photo-5215021.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 11,
-    name: "Dr. Kevin Miller",
-    location: "Sheffield, UK",
-    specialization: "Trauma Recovery",
-    experience: "19 years",
-    rating: 5,
-    phone: "+44 114 234 5678",
-    email: "kevin.miller@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5452292/pexels-photo-5452292.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-  {
-    id: 12,
-    name: "Elena Rodriguez",
-    location: "Cardiff, UK",
-    specialization: "Emotional Resilience",
-    experience: "13 years",
-    rating: 5,
-    phone: "+44 29 1234 5678",
-    email: "elena.rodriguez@bylart.com",
-    image:
-      "https://images.pexels.com/photos/5215003/pexels-photo-5215003.jpeg?auto=compress&cs=tinysrgb&w=400",
-  },
-];
+import { getTherapists, Therapist } from "../../utils/therapistStore";
 
 export default function FindTherapist() {
-  const [searchLocation, setSearchLocation] = useState("");
+  const [therapists, setTherapists] = useState<Therapist[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    // Load therapists from store (which persists in localStorage)
+    setTherapists(getTherapists());
+  }, []);
 
   const filteredTherapists = therapists.filter(
     (therapist) =>
-      therapist.location.toLowerCase().includes(searchLocation.toLowerCase()) ||
-      therapist.specialization
-        .toLowerCase()
-        .includes(searchLocation.toLowerCase()),
+      therapist.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      therapist.specialization.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      therapist.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      therapist.expertise.some((exp) => exp.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
@@ -190,12 +50,23 @@ export default function FindTherapist() {
                 />
                 <input
                   type="text"
-                  placeholder="Search by location or specialization..."
-                  value={searchLocation}
-                  onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300 text-lg"
+                  placeholder="Search by name, location, issue, or specialization..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300 text-lg shadow-lg"
                 />
               </div>
+            </div>
+
+            {/* Quick entry link to admin management */}
+            <div className="mt-8 flex justify-center">
+              <Link
+                to="/therapists/manage"
+                className="inline-flex items-center space-x-2 text-sm font-semibold bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-full border border-white/20 hover:border-white/30 transition-all duration-300 transform hover:scale-105 shadow-sm"
+              >
+                <Settings size={16} className="animate-spin-slow" />
+                <span>Manage Directory & Edit Therapists</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -218,6 +89,10 @@ export default function FindTherapist() {
                     src={therapist.image}
                     alt={therapist.name}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400";
+                    }}
                   />
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <span className="bg-white text-emerald-700 px-6 py-2 rounded-full font-bold shadow-lg">
@@ -226,9 +101,18 @@ export default function FindTherapist() {
                   </div>
                 </Link>
                 <div className="p-8 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2 truncate">
-                    {therapist.name}
-                  </h3>
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-2xl font-bold text-gray-900 truncate pr-2">
+                      {therapist.name}
+                    </h3>
+                    <Link
+                      to={`/therapists/manage?edit=${therapist.id}`}
+                      className="text-xs text-gray-400 hover:text-emerald-600 transition-colors p-1"
+                      title="Edit this therapist"
+                    >
+                      <Settings size={14} />
+                    </Link>
+                  </div>
                   <div className="flex items-center mb-4">
                     {[...Array(therapist.rating)].map((_, i) => (
                       <Star
@@ -237,29 +121,44 @@ export default function FindTherapist() {
                         className="text-yellow-400 fill-current"
                       />
                     ))}
-                    <span className="ml-2 text-sm text-gray-500">
-                      Certified
+                    <span className="ml-2 text-sm text-gray-500 font-medium">
+                      Certified BFRP
                     </span>
                   </div>
 
                   <div className="space-y-3 mb-8 flex-1">
                     <div className="flex items-center text-gray-600">
-                      <MapPin size={18} className="mr-3 text-emerald-500" />
+                      <MapPin size={18} className="mr-3 text-emerald-500 flex-shrink-0" />
                       <span className="text-sm">{therapist.location}</span>
                     </div>
-                    <div className="flex items-center text-emerald-600 font-semibold italic text-sm">
-                      #{therapist.specialization}
+                    <div className="text-emerald-700 font-semibold italic text-sm line-clamp-1">
+                      {therapist.specialization}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {therapist.expertise.slice(0, 3).map((exp, i) => (
+                        <span
+                          key={i}
+                          className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-medium"
+                        >
+                          {exp}
+                        </span>
+                      ))}
+                      {therapist.expertise.length > 3 && (
+                        <span className="bg-gray-100 text-gray-600 text-xs px-2.5 py-1 rounded-full font-medium">
+                          +{therapist.expertise.length - 3} more
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  <div className="space-y-2 mb-6 pt-4 border-t border-gray-50">
+                  <div className="space-y-2 mb-6 pt-4 border-t border-gray-100">
                     <div className="flex items-center text-xs text-gray-500">
-                      <Phone size={14} className="mr-3" />
+                      <Phone size={14} className="mr-3 flex-shrink-0" />
                       <span>{therapist.phone}</span>
                     </div>
                     <div className="flex items-center text-xs text-gray-500">
-                      <Mail size={14} className="mr-3" />
-                      <span>{therapist.email}</span>
+                      <Mail size={14} className="mr-3 flex-shrink-0" />
+                      <span className="truncate">{therapist.email}</span>
                     </div>
                   </div>
 
@@ -271,7 +170,7 @@ export default function FindTherapist() {
                       Details
                     </Link>
                     <Link
-                      to="/therapists/book"
+                      to={`/therapists/book?therapist=${encodeURIComponent(therapist.name)}`}
                       className="text-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-700 transition-colors shadow-md"
                     >
                       Book
@@ -283,10 +182,17 @@ export default function FindTherapist() {
           </div>
 
           {filteredTherapists.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-500">
-                No therapists found. Try a different search.
+            <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100 mt-8">
+              <Search size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-xl text-gray-500 mb-4">
+                No therapists found matching "{searchQuery}"
               </p>
+              <button
+                onClick={() => setSearchQuery("")}
+                className="px-6 py-2 bg-emerald-600 text-white rounded-full font-semibold hover:bg-emerald-700 transition-colors"
+              >
+                Clear Search Query
+              </button>
             </div>
           )}
         </div>

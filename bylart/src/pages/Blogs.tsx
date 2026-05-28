@@ -9,9 +9,20 @@ import {
   Book,
   Layers,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 
-const blogSections = [
+interface BlogSection {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  count: number;
+  link: string;
+  subsections?: string[];
+}
+
+const blogSections: BlogSection[] = [
   {
     id: "intro",
     title: "Introduction to Bach Flower Remedies",
@@ -19,6 +30,7 @@ const blogSections = [
       "An overview of what Bach Flower remedies are, their history, how they work, and their benefits.",
     icon: <Info className="text-emerald-500" size={32} />,
     count: 5,
+    link: "/remedies/introduction",
   },
   {
     id: "essences",
@@ -27,6 +39,7 @@ const blogSections = [
       "Properties of each essence, the emotions they address, and situations where they might be beneficial.",
     icon: <Heart className="text-pink-500" size={32} />,
     count: 38,
+    link: "/remedies/essences",
   },
   {
     id: "how-to-use",
@@ -35,6 +48,7 @@ const blogSections = [
       "Practical guidance on dosage, methods of administration, and tips for daily routines.",
     icon: <ClipboardList className="text-blue-500" size={32} />,
     count: 4,
+    link: "/remedies/how-to-use",
   },
   {
     id: "success-stories",
@@ -43,6 +57,7 @@ const blogSections = [
       "Real-life testimonials and case studies illustrating the effectiveness of the remedies.",
     icon: <Star className="text-yellow-500" size={32} />,
     count: 12,
+    link: "/success-stories",
   },
   {
     id: "expert-advice",
@@ -51,6 +66,7 @@ const blogSections = [
       "Guest posts from therapists offering insights into psychological and emotional issues.",
     icon: <MessageSquare className="text-purple-500" size={32} />,
     count: 8,
+    link: "/expert-advice",
   },
   {
     id: "faqs",
@@ -59,6 +75,7 @@ const blogSections = [
       "Common questions about safety, interactions, and suitability. Linked to our FAQ page.",
     icon: <BookOpen className="text-teal-500" size={32} />,
     count: 1,
+    link: "/faq",
   },
   {
     id: "resources",
@@ -67,6 +84,7 @@ const blogSections = [
       "Links to additional books, articles, and websites to learn more.",
     icon: <Book className="text-orange-500" size={32} />,
     count: 15,
+    link: "/resources",
   },
   {
     id: "seven-groups",
@@ -84,6 +102,7 @@ const blogSections = [
       "Over-care for others welfare",
     ],
     count: 7,
+    link: "/remedies/seven-groups",
   },
 ];
 
@@ -119,60 +138,52 @@ export default function Blogs() {
             {blogSections.map((section, index) => (
               <div
                 key={section.id}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-400 group border border-emerald-50 hover:border-emerald-200 animate-fade-in-up"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-400 group border border-emerald-50 hover:border-emerald-200 animate-fade-in-up flex flex-col justify-between"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300 inline-block p-4 bg-emerald-50 rounded-2xl">
-                  {section.icon}
+                <div>
+                  <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300 inline-block p-4 bg-emerald-50 rounded-2xl">
+                    {section.icon}
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-emerald-600 transition-colors">
+                    {section.title}
+                  </h2>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    {section.description}
+                  </p>
+
+                  {section.subsections && (
+                    <ul className="mb-6 space-y-2">
+                      {section.subsections.map((sub, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-center text-sm text-gray-500"
+                        >
+                          <ArrowRight
+                            size={14}
+                            className="mr-2 text-emerald-400"
+                          />
+                          {sub}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-emerald-600 transition-colors">
-                  {section.title}
-                </h2>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {section.description}
-                </p>
 
-                {section.subsections && (
-                  <ul className="mb-6 space-y-2">
-                    {section.subsections.map((sub, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center text-sm text-gray-500"
-                      >
-                        <ArrowRight
-                          size={14}
-                          className="mr-2 text-emerald-400"
-                        />
-                        {sub}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                <div className="flex items-center justify-between mt-auto">
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100">
                   <span className="text-sm font-medium text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
                     {section.count} {section.count === 1 ? "Post" : "Posts"}
                   </span>
-                  {section.link ? (
-                    <a
-                      href={section.link}
-                      className="flex items-center text-emerald-600 font-semibold hover:text-emerald-700 transition-colors group/link"
-                    >
-                      View All
-                      <ArrowRight
-                        size={18}
-                        className="ml-2 transform group-hover/link:translate-x-1 transition-transform"
-                      />
-                    </a>
-                  ) : (
-                    <button className="flex items-center text-emerald-600 font-semibold hover:text-emerald-700 transition-colors group/link">
-                      Explore
-                      <ArrowRight
-                        size={18}
-                        className="ml-2 transform group-hover/link:translate-x-1 transition-transform"
-                      />
-                    </button>
-                  )}
+                  <Link
+                    to={section.link}
+                    className="flex items-center text-emerald-600 font-bold hover:text-emerald-700 transition-colors group/link"
+                  >
+                    <span>Explore</span>
+                    <ArrowRight
+                      size={18}
+                      className="ml-2 transform group-hover/link:translate-x-1 transition-transform"
+                    />
+                  </Link>
                 </div>
               </div>
             ))}

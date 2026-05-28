@@ -30,6 +30,9 @@ const BookAppointment = lazy(
 const TherapistProfile = lazy(
   () => import("./pages/therapists/TherapistProfile"),
 );
+const ManageTherapists = lazy(
+  () => import("./pages/therapists/ManageTherapists"),
+);
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 
 
@@ -99,6 +102,7 @@ function App() {
                 <Route path="/therapists/find" element={<FindTherapist />} />
                 <Route path="/therapists/about" element={<AboutTherapists />} />
                 <Route path="/therapists/book" element={<BookAppointment />} />
+                <Route path="/therapists/manage" element={<ManageTherapists />} />
                 <Route path="/therapists/:id" element={<TherapistProfile />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               </Routes>
